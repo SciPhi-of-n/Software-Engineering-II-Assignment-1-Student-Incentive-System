@@ -25,8 +25,8 @@ class Record(db.Model):
       printf("There can only be one record per student.")
       return None
 
-  def updateRecord(studentName, hours):
-    studentFound= Student.query.filter_by(username = studentName).first()
+  def updateRecord(studentId, hours):
+    studentFound= Student.query.filter_by(id = studentName).first()
     if not studentFound:
       printf("No student of the name {studentName} could be found")
       return None 
