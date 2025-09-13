@@ -12,15 +12,21 @@ class Accolade(db.Model):
     self.hours= award
 
   def __repr__(self):
-    return f'<Accolade {self.accoladeId} for student {self.student.username} due to having {self.award} hours logged in>'
+    return f'<Accolade awarded to student {self.studentId} for to having {self.award} hours logged in>'
 
   def createAccolade(studentId, award):
     try:
       student= Student.query.get(studentId)
-    except NotFound as nf:
-      print("Student not found")
-    else:
+      if student is None:
+        print("Student not found")
+        return None
       newAccolade= Accolade(studentId, award)
+      db.session.add(newAccolade)
+      db.session.commit()
       return newAccolade
+    except Expection as e:
+      db.session.rollback()
+      printf("Error: ", e)
+      return None
       
     
