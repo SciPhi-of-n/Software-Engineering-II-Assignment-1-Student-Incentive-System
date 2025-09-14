@@ -16,15 +16,15 @@ class Student(User):
       self.user_type = "student"
 
   def viewAccolades(self):
-    return Accolade.query.filterby(Accolade.studentId = self.id).all()
+    return Accolade.query.filter(Accolade.studentId == self.id).all()
 
   def requestHours(self):
-    search = Request.query.filterby(Request.studentId = self.id).all()
+    search = Request.query.filter(Request.studentId == self.id).all()
     if search:
       db.session.rollback()
       printf("Only one request can be made per student")
       return none
     else:
       request = Request()
-      return createRequest(self.id)
+      return request.createRequest(self.id)
     
