@@ -1,5 +1,6 @@
+from psycopg2 import IntegrityError
 from .student import Student
-from App.database imprort db
+from App.database import db
 
 class Record(db.Model):
   recordId = db.Column(db.Integer, primary_key=True)
@@ -22,24 +23,24 @@ class Record(db.Model):
       return self
     except IntegrityError as e:
       db.session.rollback()
-      printf("There can only be one record per student.")
+      print("There can only be one record per student.")
       return None
 
   def updateRecord(studentId, hours):
-    studentFound= Student.query.filter_by(id = studentName).first()
+    studentFound= Student.query.filter_by(id = studentId).first()
     if not studentFound:
-      printf("No student of the name {studentName} could be found")
+      print("No student of the name {studentName} could be found")
       return None 
     record = Record.query.filter_by(studentId = studentFound.id).first()
     if not record:
-      printf("{studentName} has no record")
+      print("{studentName} has no record")
       return None
     try:
       record.hours=hours
       db.session.commit()
-      printf("Record Updated")
+      print("Record Updated")
       return record
-    except Expection as e:
+    except Exception as e:
       db.session.rollback()
       print("Error: ", e)
       return None
