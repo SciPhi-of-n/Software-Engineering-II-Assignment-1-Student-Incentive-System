@@ -22,8 +22,8 @@ class Student(User):
     search = Request.query.filter(Request.studentId == self.id).all()
     if search:
       db.session.rollback()
-      printf("Only one request can be made per student")
-      return none
+      print("Only one request can be made per student")
+      return None
     else:
       request = Request()
       return request.createRequest(self.id)
