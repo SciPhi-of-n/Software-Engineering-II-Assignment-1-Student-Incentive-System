@@ -1,8 +1,7 @@
 from .user import User
 from App.database import db
 
-class Student(User):
-  __tablename__ = 'student'
+class Staff(User):
   __mapper_args__ = {
       'polymorphic_identity': 'staff',
     }
