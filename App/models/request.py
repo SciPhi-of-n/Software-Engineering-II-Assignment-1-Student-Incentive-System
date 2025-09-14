@@ -1,6 +1,6 @@
 from .student import Student
 from .staff import Staff
-from App.database imprort db
+from App.database import db
 
 class Request(db.Model):
    __tablename__ = 'requests'
@@ -11,26 +11,26 @@ class Request(db.Model):
    student= db.relationship('Student', backref=db.backref('requests', uselist=False))
    staff= db.relationship('Student', backref=db.backref('handled_request', lazy='joined'))
 
-  def __init__(self, studentId):
+   def __init__(self, studentId):
      self.studentId=studentId
      self.staffId=None
      self.status="pending"
 
-  def __repr__(self):
+   def __repr__(self):
     return f'<Request for Hours no. {self.requestId} Student {self.student.username} Staff: {self.staff.username} Status: {self.status}>'
 
-  def createRequest(studentId):
+   def createRequest(studentId):
      newRequest= Request()
      newRequest.studentId = studentId
      db.session.add(newRequest)
      db.session.commit()
      return newRequest
 
-  def approveRequest(selectedRequest, staffId):
+   def approveRequest(selectedRequest, staffId):
      try:
         request = Request.query.filter_by(requestId = selectedRequest).first()
         if request is None:
-           printf("Request not found")
+           print("Request not found")
            return None
            
         request.staffId= staffId
@@ -39,14 +39,14 @@ class Request(db.Model):
         return request
      except Exception as e:
         db.session.rollback()
-        printf("Error: ", e)
-        return none
+        print("Error: ", e)
+        return None
 
-  def denyRequest(selectedRequest, staffId):
+   def denyRequest(selectedRequest, staffId):
      try:
         request = Request.query.filter_by(requestId = selectedRequest).first()
         if request is None:
-           printf("Request not found")
+           print("Request not found")
            return None
            
         request.staffId= staffId
@@ -55,5 +55,5 @@ class Request(db.Model):
         return request
      except Exception as e:
         db.session.rollback()
-        printf("Error: ", e)
-        return none
+        print("Error: ", e)
+        return None
