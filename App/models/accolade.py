@@ -24,9 +24,9 @@ class Accolade(db.Model):
       db.session.add(newAccolade)
       db.session.commit()
       return newAccolade
-    except Expection as e:
+    except Exception as e:
       db.session.rollback()
-      printf("Error: ", e)
+      print("Error: ", e)
       return None
       
     
