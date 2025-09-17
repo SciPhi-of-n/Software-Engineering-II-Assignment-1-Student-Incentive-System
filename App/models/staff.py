@@ -18,7 +18,7 @@ class Staff(User):
   
   def viewRequests():
     requests = Request.query.all()
-    print(requests.__repr__())
+    print(repr(requests))
 
   def approveRequest(requestId, self):
     return Request.approveRequest(requestId, self.id)
