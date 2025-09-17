@@ -5,7 +5,9 @@ from .record import Record
 from App.database import db
 
 class Student(User):
-  __tablename__ = 'student'
+  record = db.relationship('Record', backref=db.backref('owner', uselist=False))
+  request = db.relationship('Request', backref=db.backref('requester', uselist=False))
+  accolade = db.relationship('Accolade', backref=db.backref('awardee', uselist=False))
   __mapper_args__ = {
       'polymorphic_identity': 'student',
     }
