@@ -20,9 +20,16 @@ class Student(User):
 
   def requestHours(self):
     search = Request.query.filter(Request.studentId == self.id).all()
-    if search:
-      db.session.rollback()
-      print("Only one request can be made per student")
+    if search and search.status == "pending":
+      print("Your request is still being processed. Please wait.")
+      return None
+    if search and search.status == "approved":
+      print("Your request for hours has been approved")
+      record = Record.query.filer(Record.studentId == self.id).first()
+      print(repr(record))
+      return None
+    elif search and search.status == "denied":
+      print("Your request for hours has been denied.")
       return None
     else:
       request = Request()
