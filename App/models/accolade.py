@@ -3,7 +3,7 @@ from App.database import db
 
 class Accolade(db.Model):
   accoladeId= db.Column(db.Integer, primary_key=True)
-  studentId = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
+  studentId = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
   award= db.Column(db.Integer)
 
   def __init__(self, recordId, studentId, award):

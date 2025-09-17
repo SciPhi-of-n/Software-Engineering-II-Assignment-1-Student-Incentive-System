@@ -3,7 +3,7 @@ from App.database import db
 
 class Request(db.Model):
    requestId= recordId = db.Column(db.Integer, primary_key=True)
-   studentId = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
+   studentId = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
    status = db.Column(db.String(30))#default=pending, approved, denied
 
    def __init__(self, studentId):

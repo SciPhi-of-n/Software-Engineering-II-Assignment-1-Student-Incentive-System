@@ -4,9 +4,8 @@ from App.database import db
 
 class Record(db.Model):
   recordId = db.Column(db.Integer, primary_key=True)
-  studentId = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False, unique=True)
+  studentId = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, unique=True)
   hours= db.Column(db.Integer)
-  student = db.relationship('Student', backref=db.backref('record', uselist=False))
 
   def __init__(self, recordId, studentId, hours):
     self.recordId= recordId
