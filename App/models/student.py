@@ -27,8 +27,6 @@ class Student(User):
       return None
     if search and search.status == "approved":
       print("Your request for hours has been approved")
-      record = Record.query.filer(Record.studentId == self.id).first()
-      print(repr(record))
       return None
     elif search and search.status == "denied":
       print("Your request for hours has been denied.")
@@ -37,3 +35,7 @@ class Student(User):
       request = Request()
       return request.createRequest(self.id)
     
+  def viewHours(self):
+    record = Record.query.filer(Record.studentId == self.id).first()
+    print(repr(record))
+    return record
