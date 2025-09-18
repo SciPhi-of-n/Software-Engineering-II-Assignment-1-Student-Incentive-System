@@ -1,4 +1,3 @@
-from .Student import Student
 from App.database import db
 
 class Accolade(db.Model):
@@ -15,6 +14,7 @@ class Accolade(db.Model):
 
   def createAccolade(studentId, award):
     try:
+      from App.models.Student import Student
       student= Student.query.get(studentId)
       if student is None:
         print("Student not found")
