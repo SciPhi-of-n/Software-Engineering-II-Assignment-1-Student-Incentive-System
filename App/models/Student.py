@@ -11,7 +11,7 @@ class Student(User):
       'polymorphic_identity': 'student',
     }
 
-  def __init__(self, username, password, hours):
+  def __init__(self, username, password, hours=0):
       self.username = username
       self.set_password(password)
       self.hours=hours
