@@ -1,7 +1,7 @@
 from App.database import db
 
 class Request(db.Model):
-   requestId= recordId = db.Column(db.Integer, primary_key=True)
+   requestId= db.Column(db.Integer, primary_key=True)
    studentId = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
    status = db.Column(db.String(30))#default=pending, approved, denied
    student = db.relationship("Student", backref=db.backref("requests", lazy=True))
