@@ -18,7 +18,7 @@ class Student(User):
       self.user_type = "student"
   
   def __repr__(self):
-    return f'<Student {self.username} Hours: {self.hours}>'
+    return f'<ID {self.id} Student {self.username} Hours: {self.hours}>'
 
   def viewAccolades(self):
     return Accolade.query.filter(Accolade.studentId == self.id).all()
