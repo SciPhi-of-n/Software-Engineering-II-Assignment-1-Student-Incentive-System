@@ -1,5 +1,5 @@
 from .user import User
-from .record import Record
+from .student import Student
 from .request import Request
 from App.database import db
 
@@ -14,7 +14,17 @@ class Staff(User):
     self.user_type = "staff"
 
   def logHours(studentId, hours):
-    return Record.updateRecord(studentId, hours)
+    student= Student.query.get(studentId)
+    if not student:
+      print("No student could be found")
+      return None
+    try:
+      student.hours = hours
+      db.session.commit()
+      return print("Student Hours Updated.")
+    except Exception as e:
+      db.session.rollback()
+      return print("Error updating hours: {e}")
   
   def viewRequests():
     requests = Request.query.all()
