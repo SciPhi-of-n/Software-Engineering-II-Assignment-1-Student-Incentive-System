@@ -5,8 +5,8 @@ from App.database import db
 
 class Student(User):
   hours=db.Column(db.Integer)
-  request = db.relationship('Request', backref=db.backref('student', uselist=False))
-  accolades = db.relationship('Accolade', backref=db.backref('student', lazy="joined"))
+  request = db.relationship('Request', backref=db.backref('requester', uselist=False))
+  accolades = db.relationship('Accolade', backref=db.backref('awardee', lazy="joined"))
   __mapper_args__ = {
       'polymorphic_identity': 'student',
     }
