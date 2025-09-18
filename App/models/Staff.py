@@ -1,6 +1,6 @@
 from .user import User
-from .student import Student
-from .request import Request
+from .Student import Student
+from .Request import Request
 from App.database import db
 
 class Staff(User):
@@ -13,22 +13,20 @@ class Staff(User):
     self.set_password(password)
     self.user_type = "staff"
 
+  def __repr__(self):
+    return f'<Staff {self.username}>'
+
   def logHours(studentId, hours):
-    student= Student.query.get(studentId)
-    if not student:
-      print("No student could be found")
-      return None
-    try:
+    student = Student.query.get(studentId)
+    if student:
       student.hours = hours
       db.session.commit()
-      return print("Student Hours Updated.")
-    except Exception as e:
-      db.session.rollback()
-      return print("Error updating hours: {e}")
+      return True
+    return False
   
   def viewRequests():
     requests = Request.query.all()
-    print(repr(requests))
+    return requests
 
   def approveRequest(requestId, self):
     return Request.approveRequest(requestId, self.id)

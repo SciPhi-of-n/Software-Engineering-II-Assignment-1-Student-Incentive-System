@@ -1,4 +1,4 @@
-from .student import Student
+from .Student import Student
 from App.database import db
 
 class Leaderboard(db.Model):

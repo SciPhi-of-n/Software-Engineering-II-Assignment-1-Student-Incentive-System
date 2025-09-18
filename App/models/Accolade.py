@@ -1,18 +1,19 @@
-from .student import Student
+from .Student import Student
 from App.database import db
 
 class Accolade(db.Model):
   accoladeId= db.Column(db.Integer, primary_key=True)
   studentId = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-  award= db.Column(db.Integer)
+  award = db.Column(db.String(100))
+  student = db.relationship('Student', backref=db.backref('accolades', lazy="joined"))
 
   def __init__(self, recordId, studentId, award):
     self.accoladeId= recordId
     self.studentId= studentId
-    self.hours= award
+    self.award= award
 
   def __repr__(self):
-    return f'<Accolade awarded to student {self.studentId} for to having {self.award} hours logged in>'
+    return f'<Accolade no. {self.accoladeId} Student {self.student.username} Award: {self.award}>'
 
   def createAccolade(studentId, award):
     try:
@@ -28,5 +29,3 @@ class Accolade(db.Model):
       db.session.rollback()
       print("Error: ", e)
       return None
-      
-    

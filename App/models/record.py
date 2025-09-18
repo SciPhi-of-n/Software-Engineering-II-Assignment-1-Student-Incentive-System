@@ -1,5 +1,5 @@
 from psycopg2 import IntegrityError
-from .student import Student
+from .Student import Student
 from App.database import db
 
 class Record(db.Model):
