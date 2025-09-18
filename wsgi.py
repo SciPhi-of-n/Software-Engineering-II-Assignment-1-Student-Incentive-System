@@ -133,15 +133,6 @@ def requestHoursCommand(studentid):
     else:
         print("Student could not be found")
 
-@student_cli.command("hours", help="Displays the hours of a student")
-@click.argument("studentid", default=1)
-def requestHoursCommand(studentid):
-    student = Student.query.get(studentid)
-    if student:
-        print(f"Student {student.username} has earned {student.viewHours()} hours")
-    else:
-        print("Student could not be found")
-
 app.cli.add_command(student_cli)
 
 '''
