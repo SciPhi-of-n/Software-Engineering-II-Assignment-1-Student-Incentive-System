@@ -6,7 +6,7 @@ from App.database import db
 class Student(User):
   hours=db.Column(db.Integer)
   request = db.relationship('Request', backref=db.backref('student', uselist=False))
-  accolade = db.relationship('Accolade', backref=db.backref('student', lazy="joined"))
+  accolades = db.relationship('Accolade', backref=db.backref('student', lazy="joined"))
   __mapper_args__ = {
       'polymorphic_identity': 'student',
     }

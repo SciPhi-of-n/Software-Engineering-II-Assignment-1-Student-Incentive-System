@@ -5,10 +5,8 @@ class Accolade(db.Model):
   accoladeId= db.Column(db.Integer, primary_key=True)
   studentId = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
   award = db.Column(db.String(100))
-  student = db.relationship('Student', backref=db.backref('accolades', lazy="joined"))
 
-  def __init__(self, recordId, studentId, award):
-    self.accoladeId= recordId
+  def __init__(self, studentId, award):
     self.studentId= studentId
     self.award= award
 
