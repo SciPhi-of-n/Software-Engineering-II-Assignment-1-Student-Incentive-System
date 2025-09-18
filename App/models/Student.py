@@ -26,5 +26,3 @@ class Student(User):
   def requestHours(self):
     return Request.query.filter(Request.studentId == self.id).all()
     
-  def viewHours(self):
-    return self.hours
