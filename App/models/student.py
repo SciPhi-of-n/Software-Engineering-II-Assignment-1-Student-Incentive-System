@@ -1,20 +1,20 @@
 from .user import User
 from .accolade import Accolade
 from .request import Request
-from .record import Record
 from App.database import db
 
 class Student(User):
-  record = db.relationship('Record', backref=db.backref('owner', uselist=False))
-  request = db.relationship('Request', backref=db.backref('requester', uselist=False))
-  accolade = db.relationship('Accolade', backref=db.backref('awardee', uselist=False))
+  hours=db.Column(db.Integer)
+  request = db.relationship('Request', backref=db.backref('student', uselist=False))
+  accolade = db.relationship('Accolade', backref=db.backref('student', uselist=False))
   __mapper_args__ = {
       'polymorphic_identity': 'student',
     }
 
-  def __init__(self, username, password):
+  def __init__(self, username, password, hours):
       self.username = username
       self.set_password(password)
+      self.hours=hours
       self.user_type = "student"
 
   def viewAccolades(self):
@@ -36,6 +36,4 @@ class Student(User):
       return request.createRequest(self.id)
     
   def viewHours(self):
-    record = Record.query.filer(Record.studentId == self.id).first()
-    print(repr(record))
-    return record
+    print("Hours Logged: {self.hours}")
