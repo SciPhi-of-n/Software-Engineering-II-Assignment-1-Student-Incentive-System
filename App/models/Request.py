@@ -13,8 +13,8 @@ class Request(db.Model):
    def __repr__(self):
     return f'<Request no. {self.requestId} Student {self.student.username} Status: {self.status}>'
 
-   def createRequest():
-     newRequest= Request()
+   def createRequest(studentId):
+     newRequest= Request(studentId)
      db.session.add(newRequest)
      db.session.commit()
      return newRequest
