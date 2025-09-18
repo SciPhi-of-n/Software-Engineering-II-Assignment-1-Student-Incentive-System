@@ -1,4 +1,3 @@
-from .Student import Student
 from App.database import db
 
 class Request(db.Model):
