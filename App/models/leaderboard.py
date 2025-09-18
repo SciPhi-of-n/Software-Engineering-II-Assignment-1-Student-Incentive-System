@@ -1,15 +1,18 @@
 from .student import Student
-from .record import Record
 from App.database import db
 
 class Leaderboard(db.Model):
   def getLeaderboard():
-    return (db.session.query(Student, Record).join(Record, Student.id == Record.studentId).order_by(Record.hours.desc()).all())
+    return (db.session.query(Student).order_by(Student.hours.desc()).all())
 
   def displayLeaderboard():
     leaderboard = Leaderboard.getLeaderboard()
     print("Leaderboard")
-    rank=1
-    for student, record in leaderboard:
-      print("{rank}. {student.name}")
-      rank=rank+1
+    rank=0
+    score=None
+    for student in leaderboard:
+      if student.hours is not score:
+        rank=rank+1
+      print("{rank}. {student.name} {student.hours}")
+      score = student.hours
+      
