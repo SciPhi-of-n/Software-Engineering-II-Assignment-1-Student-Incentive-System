@@ -26,6 +26,13 @@ def init():
     db.session.add(student3)
     db.session.add(staff)
     db.session.commit()
+    accolade1=Accolade(student1.id, award="Ten Hour Energy")
+    accolade2=Accolade(student2.id, award="Ten Hour Energy")
+    accolade3=Accolade(student2.id, award="Pushing Thirty")
+    db.session.add(accolade1)
+    db.session.add(accolade2)
+    db.session.add(accolade3)
+    db.session.commit()
     print('database intialized')
 
 @app.cli.command("leaderboard", help="Displays leaderboard")
