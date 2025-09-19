@@ -24,5 +24,6 @@ class Student(User):
     return Accolade.query.filter(Accolade.studentId == self.id).all()
 
   def requestHours(self):
-    return Request.query.filter(Request.studentId == self.id).all()
+    request = Request.createRequest(self.id)
+    return request
     
