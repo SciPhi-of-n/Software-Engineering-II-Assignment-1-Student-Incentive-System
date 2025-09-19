@@ -10,7 +10,7 @@ class Accolade(db.Model):
     self.award= award
 
   def __repr__(self):
-    return f'<Accolade no. {self.accoladeId} Student {self.student.username} Award: {self.award}>'
+    return f'<Student {self.awardee.username} Award: {self.award}>'
 
   def createAccolade(studentId, award):
     try:
