@@ -104,8 +104,11 @@ def listStudentsCommand(format):
 def requestHoursCommand(studentid):
     student = Student.query.get(studentid)
     if student:
-        request = Request.createRequest(studentid)
-        print("Request created")
+        request = student.requestHours()
+        if request:
+            print("Request created")
+        else:
+            print("Request could not be created")
     else:
         print("Student could not be found")
 
