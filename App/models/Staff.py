@@ -28,8 +28,13 @@ class Staff(User):
     requests = Request.query.all()
     return requests
 
-  def approveRequest(requestId, self):
-    return Request.approveRequest(requestId, self.id)
-  
-  def denyRequest(requestId, self):
-    return Request.denyRequest(requestId, self.id)
+  def respondRequest(requestId, status):
+    if status == "approved":
+      request = Request.approveRequest(requestId)
+      if request:
+        return True
+    elif status == "denied":
+      request = Request.denyRequest(requestId)
+      if request:
+        return True
+    return False
