@@ -4,14 +4,13 @@ class Request(db.Model):
    requestId= db.Column(db.Integer, primary_key=True)
    studentId = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
    status = db.Column(db.String(30))#default=pending, approved, denied
-   student = db.relationship("Student", backref=db.backref("requests", lazy=True))
 
    def __init__(self, studentId):
      self.studentId=studentId
      self.status="pending"
 
    def __repr__(self):
-    return f'<Request no. {self.requestId} Student {self.student.username} Status: {self.status}>'
+    return f'<Request no. {self.requestId} Student {self.requester.username} Status: {self.status}>'
 
    def createRequest(studentId):
      newRequest= Request(studentId)
