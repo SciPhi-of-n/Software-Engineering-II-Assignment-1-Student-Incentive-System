@@ -1,4 +1,3 @@
-from App import Student, Staff
 from werkzeug.security import check_password_hash, generate_password_hash
 from App.database import db
 
@@ -28,6 +27,7 @@ class User(db.Model):
         return check_password_hash(self.password, password)
 
     def createStudent(username, password, hours):
+        from App.models.Student import Student
         newStudent = Student(username, password, hours)
         try:
             db.session.add(newStudent)
@@ -39,6 +39,7 @@ class User(db.Model):
         
     def getStudent(id):
         try:
+            from App.models.Student import Student
             student = Student.query.get(id)
             if student == None:
                 raise Exception(f"No student with the ID {id} could be found")
@@ -48,9 +49,11 @@ class User(db.Model):
             return None
     
     def getAllStudents():
+        from App.models.Student import Student
         return Student.query.all()
 
     def createStaff(username, password):
+        from App.models.Staff import Staff
         newStaff = Staff(username, password)
         try:
             db.session.add(newStaff)
@@ -61,6 +64,7 @@ class User(db.Model):
             return None
         
     def getStaff(id):
+        from App.models.Staff import Staff
         try:
             staff = Staff.query.get(id)
             if staff == None:
@@ -71,4 +75,5 @@ class User(db.Model):
             return None
         
     def getAllStaff():
+        from App.models.Staff import Staff
         return Staff.query.all()
