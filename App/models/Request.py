@@ -10,7 +10,7 @@ class Request(db.Model):
      self.status="pending"
 
    def __repr__(self):
-    return f'<Request no. {self.requestId} Student {self.requester.username} Status: {self.status}>'
+    return f'<Request no. {self.requestId} Student ID: {self.requester.id} Status: {self.status}>'
 
    def createRequest(studentId):
      newRequest= Request(studentId)
