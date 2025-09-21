@@ -146,6 +146,61 @@ def requestHoursCommand(studentid):
 app.cli.add_command(student_cli)
 
 '''
+Staff Commands
+'''
+
+staff_cli = AppGroup('staff', help='Staff object commands')
+
+@staff_cli.command("create", help="Creates a member of Staff")
+@click.argument("username", default="admin")
+@click.argument("password", default="adminpass")
+def createStaffCommand(username, password):
+    staff = Staff(username, password)
+    db.session.add(staff)
+    db.session.commit()
+    print(f"Staff member {username} created")
+
+@staff_cli.command("list", help="Lists members of staff in the database")
+@click.argument("format", default="string")
+def listStaffCommand(format):
+    staff = Staff.query.all()
+    for member in staff:
+        print(repr(member))
+
+@staff_cli.command("log", help="Logs in hours to a chosen student")
+@click.argument("studentid", default=1)
+@click.argument("hours")
+def logHoursCommand(studentid, hours):
+    logged=Staff.logHours(studentid, hours)
+    if logged == True:
+        print(f"Successfully logged {hours} to student")
+    else:
+        print(f"Student could not be found")
+
+@staff_cli.command("view", help="Displays a list of requests")
+def viewRequestsCommand():
+    requests= Request.query.all()
+    for request in requests:
+        print(repr(request))
+
+@staff_cli.command("respond", help="Sets a selected request's status to either approved or denied")
+@click.argument("requestid", default=1)
+@click.argument("response")
+def respondRequestCommand(requestid, response):
+    if response not in ["approved", "denied"]:
+        print("Response must be set to either approved or denied")
+    else:
+        request= Request.query.get(requestid)
+        if request:
+            responded= Staff.respondRequest(requestid, response)
+            if responded == True:
+                print(f"Request no. {request.requestId} has been updated to '{response}' status")
+        else:
+            print("Request could not be found")
+
+app.cli.add_command(staff_cli)
+
+'''
 Test Commands
 '''
 
