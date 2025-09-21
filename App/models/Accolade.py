@@ -17,7 +17,6 @@ class Accolade(db.Model):
       from App.models.Student import Student
       student= Student.query.get(studentId)
       if student is None:
-        print("Student not found")
         return None
       newAccolade= Accolade(studentId, award)
       db.session.add(newAccolade)
