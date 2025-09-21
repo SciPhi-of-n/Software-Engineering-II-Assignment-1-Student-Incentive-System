@@ -187,7 +187,7 @@ def viewRequestsCommand():
 @click.argument("requestid", default=1)
 @click.argument("response")
 def respondRequestCommand(requestid, response):
-    if response not in ["approved", "denied"]:
+    if response != "approved" and response != "denied":
         print("Response must be set to either approved or denied")
     else:
         request= Request.query.get(requestid)
