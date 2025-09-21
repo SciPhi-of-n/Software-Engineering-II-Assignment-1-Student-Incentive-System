@@ -12,6 +12,14 @@ from App.controllers import ( create_user, get_all_users_json, get_all_users)
 app = create_app()
 migrate = get_migrate(app)
 
+'''
+Generic Commands
+'''
+
+@app.cli.command("rollback")
+def rollback():
+    db.session.rollback()
+
 # This command creates and initializes the database
 @app.cli.command("init", help="Creates and initializes the database")
 def init():
@@ -87,22 +95,23 @@ student_cli = AppGroup('student', help='Student object commands')
 @click.argument("username", default="rob")
 @click.argument("password", default="robpass")
 def createStudentCommand(username, password):
-    student = Student(username, password)
-    db.session.add(student)
-    db.session.commit()
-    print(f"Student {username} created")
+    student = Student.createStudent(username, password, 0)
+    if student == None:
+        print(f"Student {username} could not be created")
+    else:
+        print(f"Student {username} created")
 
 @student_cli.command("list", help="Lists students in the database")
 @click.argument("format", default="string")
 def listStudentsCommand(format):
-    students = Student.query.all()
+    students = Student.getAllStudents()
     for student in students:
         print(repr(student))
 
 @student_cli.command("request", help="Requests confirmation of hours")
 @click.argument("studentid", default=1)
 def requestHoursCommand(studentid):
-    student = Student.query.get(studentid)
+    student = Student.getStudent(studentid)
     if student:
         request = student.requestHours()
         if request:
@@ -115,7 +124,7 @@ def requestHoursCommand(studentid):
 @student_cli.command("status", help="Displays the status of a request sent")
 @click.argument("studentid", default=1)
 def requestStatusCommand(studentid):
-    student = Student.query.get(studentid)
+    student = Student.getStudent(studentid)
     if student:
         requests = Request.query.filter(Request.studentId == studentid).all()
         if requests:
@@ -132,7 +141,7 @@ def requestStatusCommand(studentid):
 @student_cli.command("accolades", help="Displays accolades of student")
 @click.argument("studentid", default=1)
 def requestHoursCommand(studentid):
-    student = Student.query.get(studentid)
+    student = Student.getStudent(studentid)
     if student:
         accolades = student.viewAccolades()
         if accolades:
@@ -155,15 +164,16 @@ staff_cli = AppGroup('staff', help='Staff object commands')
 @click.argument("username", default="admin")
 @click.argument("password", default="adminpass")
 def createStaffCommand(username, password):
-    staff = Staff(username, password)
-    db.session.add(staff)
-    db.session.commit()
-    print(f"Staff member {username} created")
+    staff = Staff.createStaff(username, password)
+    if staff == None:
+        print(f"Staff member {username} could not be created")
+    else:
+        print(f"Staff member {username} created")
 
 @staff_cli.command("list", help="Lists members of staff in the database")
 @click.argument("format", default="string")
 def listStaffCommand(format):
-    staff = Staff.query.all()
+    staff = Staff.getAllStaff()
     for member in staff:
         print(repr(member))
 
