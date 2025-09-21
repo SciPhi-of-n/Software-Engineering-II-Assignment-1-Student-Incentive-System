@@ -208,6 +208,18 @@ def respondRequestCommand(requestid, response):
         else:
             print("Request could not be found")
 
+@staff_cli.command("award", help="Awards a selected student with an accolade")
+@click.argument("studentid", default=1)
+@click.argument("award_name", type=str)
+def awardStudentCommand(studentid, award_name):
+    student = Student.getStudent(studentid)
+    if student:
+        newAccolade= Accolade.createAccolade(studentid, award_name)
+        if newAccolade:
+            print(f"'{newAccolade.award}' has been award to student {student.id}")
+    else:
+        print("Student could not be found")
+
 app.cli.add_command(staff_cli)
 
 '''
