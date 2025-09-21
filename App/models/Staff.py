@@ -16,6 +16,30 @@ class Staff(User):
   def __repr__(self):
     return f'<Staff {self.username}>'
 
+  def createStaff(username, password):
+    newStaff = Staff(username, password)
+    try:
+      db.session.add(newStaff)
+      db.session.commit()
+      return newStaff
+    except:
+      db.session.rollback()
+      return None
+        
+  def getStaff(id):
+    from App.models.Staff import Staff
+    try:
+      staff = Staff.query.get(id)
+      if staff == None:
+        raise Exception(f"No member of staff with the ID {id} could be found")
+      return staff
+    except Exception as e:
+      print(e)
+      return None
+        
+  def getAllStaff():
+    return Staff.query.all()
+
   def logHours(studentId, hours):
     student = Student.query.get(studentId)
     if student:
