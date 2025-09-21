@@ -1,3 +1,4 @@
+from App import Student, Staff
 from werkzeug.security import check_password_hash, generate_password_hash
 from App.database import db
 
@@ -26,3 +27,48 @@ class User(db.Model):
         """Check hashed password."""
         return check_password_hash(self.password, password)
 
+    def createStudent(username, password, hours):
+        newStudent = Student(username, password, hours)
+        try:
+            db.session.add(newStudent)
+            db.session.commit()
+            return newStudent
+        except:
+            db.session.rollback()
+            return None
+        
+    def getStudent(id):
+        try:
+            student = Student.query.get(id)
+            if student == None:
+                raise Exception(f"No student with the ID {id} could be found")
+            return student
+        except Exception as e:
+            print(e)
+            return None
+    
+    def getAllStudents():
+        return Student.query.all()
+
+    def createStaff(username, password):
+        newStaff = Staff(username, password)
+        try:
+            db.session.add(newStaff)
+            db.session.commit()
+            return newStaff
+        except:
+            db.session.rollback()
+            return None
+        
+    def getStaff(id):
+        try:
+            staff = Staff.query.get(id)
+            if staff == None:
+                raise Exception(f"No member of staff with the ID {id} could be found")
+            return staff
+        except Exception as e:
+            print(e)
+            return None
+        
+    def getAllStaff():
+        return Staff.query.all()
