@@ -109,9 +109,9 @@ def listStudentsCommand(format):
         print(repr(student))
 
 @student_cli.command("request", help="Requests confirmation of hours")
-@click.argument("studentid", default=1)
-def requestHoursCommand(studentid):
-    student = Student.getStudent(studentid)
+@click.argument("student_id", default=1)
+def requestHoursCommand(student_id):
+    student = Student.getStudent(student_id)
     if student:
         request = student.requestHours()
         if request:
@@ -122,15 +122,15 @@ def requestHoursCommand(studentid):
         print("Student could not be found")
 
 @student_cli.command("status", help="Displays the status of a request sent")
-@click.argument("studentid", default=1)
-def requestStatusCommand(studentid):
-    student = Student.getStudent(studentid)
+@click.argument("student_id", default=1)
+def requestStatusCommand(student_id):
+    student = Student.getStudent(student_id)
     if student:
-        requests = Request.query.filter(Request.studentId == studentid).all()
+        requests = Request.query.filter(Request.student_id == student_id).all()
         if requests:
             for request in requests:
                 if(request.status) == "pending":
-                    print(f"Request {request.requestId} is current pending. Please wait.")
+                    print(f"Request {request.request_id} is current pending. Please wait.")
                 else:
                     print(f"Request {request.requestId} has been {request.status}.")
         else:
@@ -139,9 +139,9 @@ def requestStatusCommand(studentid):
         print("Student could not be found")
 
 @student_cli.command("accolades", help="Displays accolades of student")
-@click.argument("studentid", default=1)
-def requestHoursCommand(studentid):
-    student = Student.getStudent(studentid)
+@click.argument("student_id", default=1)
+def requestHoursCommand(student_id):
+    student = Student.getStudent(student_id)
     if student:
         accolades = student.viewAccolades()
         if accolades:
@@ -178,10 +178,10 @@ def listStaffCommand(format):
         print(repr(member))
 
 @staff_cli.command("log", help="Logs in hours to a chosen student")
-@click.argument("studentid", default=1)
+@click.argument("student_id", default=1)
 @click.argument("hours")
-def logHoursCommand(studentid, hours):
-    logged=Staff.logHours(studentid, hours)
+def logHoursCommand(student_id, hours):
+    logged=Staff.logHours(student_id, hours)
     if logged == True:
         print(f"Successfully logged {hours} to student")
     else:
@@ -194,27 +194,27 @@ def viewRequestsCommand():
         print(repr(request))
 
 @staff_cli.command("respond", help="Sets a selected request's status to either approved or denied")
-@click.argument("requestid", default=1)
+@click.argument("request_id", default=1)
 @click.argument("response")
-def respondRequestCommand(requestid, response):
+def respondRequestCommand(request_id, response):
     if response != "approved" and response != "denied":
         print("Response must be set to either approved or denied")
     else:
-        request= Request.query.get(requestid)
+        request= Request.query.get(request_id)
         if request:
-            responded= Staff.respondRequest(requestid, response)
+            responded= Staff.respondRequest(request_id, response)
             if responded == True:
                 print(f"Request no. {request.requestId} has been updated to '{response}' status")
         else:
             print("Request could not be found")
 
 @staff_cli.command("award", help="Awards a selected student with an accolade")
-@click.argument("studentid", default=1)
+@click.argument("student_id", default=1)
 @click.argument("award_name", type=str)
-def awardStudentCommand(studentid, award_name):
-    student = Student.getStudent(studentid)
+def awardStudentCommand(student_id, award_name):
+    student = Student.getStudent(student_id)
     if student:
-        newAccolade= Accolade.createAccolade(studentid, award_name)
+        newAccolade= Accolade.createAccolade(student_id, award_name)
         if newAccolade:
             print(f"'{newAccolade.award}' has been award to student {student.id}")
     else:
