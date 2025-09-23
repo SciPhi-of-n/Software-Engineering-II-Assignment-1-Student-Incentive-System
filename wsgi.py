@@ -130,7 +130,7 @@ def requestStatusCommand(student_id):
         if requests:
             for request in requests:
                 if(request.status) == "pending":
-                    print(f"Request {request.request_id} is current pending. Please wait.")
+                    print(f"Request {request.requestId} is current pending. Please wait.")
                 else:
                     print(f"Request {request.requestId} has been {request.status}.")
         else:
