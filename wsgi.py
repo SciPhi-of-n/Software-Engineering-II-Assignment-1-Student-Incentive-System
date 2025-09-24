@@ -126,7 +126,7 @@ def requestHoursCommand(student_id):
 def requestStatusCommand(student_id):
     student = Student.getStudent(student_id)
     if student:
-        requests = Request.query.filter(Request.student_id == student_id).all()
+        requests = Request.query.filter(Request.studentId == student_id).all()
         if requests:
             for request in requests:
                 if(request.status) == "pending":
