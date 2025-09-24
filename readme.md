@@ -70,4 +70,4 @@ _Respond to a request with "approved" or "denied"_
 ```bash
 $ flask staff respond request_id response
 ```
-(Note: responses must be in double quotes or the command will not work)
+(Note: responses can be in double quotes or no quotes)
