@@ -70,4 +70,9 @@ _Respond to a request with "approved" or "denied"_
 ```bash
 $ flask staff respond request_id response
 ```
-(Note: responses can be in double quotes or no quotes)
+
+_Award accolade to student_
+```bash
+$ flask staff award student_id award_name
+```
+(Note: The award name must be in double quotes if the name has 2 or more words in it. Eg "Great Job", "Always On Time" etc.)
